@@ -1,5 +1,4 @@
 import express from 'express';
-import mysql from 'mysql2';
 import path from 'path';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -33,6 +32,14 @@ app.post('/add_user', (req, res)=>{
         }
         res.status(201).json({ message: "User added successfully", id: result.insertId });
     });
+})
+
+app.get("/users", (req, res) => {
+    const sql = "SELECT * FROM users"
+    db.query(sql, (err, result) => {
+        if (err) res.json({"message": "Server error"})
+        return res.json(result)
+    })
 })
 
 app.listen(PORT, () => {

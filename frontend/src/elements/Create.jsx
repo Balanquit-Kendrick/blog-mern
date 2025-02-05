@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
-
+import { BASE_URL } from '../utils/constants'
 
 function Create() {
     const [values, setValues] = useState({
@@ -10,13 +10,12 @@ function Create() {
         email: '',
     })
 
-    const API_URL = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
 
     function handleSubmit(e){
         e.preventDefault()
 
-        axios.post(`${API_URL}/add_user`, values)
+        axios.post(BASE_URL+'/add_user', values)
         .then((res)=>{
             console.log('res',res)
             navigate('/')
