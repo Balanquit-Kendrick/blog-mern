@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
-import { BASE_URL } from '../utils/constants'
+import { BASE_URL, USERS_URL } from '../utils/constants'
 
 function Create() {
     const [values, setValues] = useState({
@@ -14,8 +14,7 @@ function Create() {
 
     function handleSubmit(e){
         e.preventDefault()
-
-        axios.post(BASE_URL+'/add_user', values)
+        axios.post(`${USERS_URL}/add_user`, values)
         .then((res)=>{
             console.log('res',res)
             navigate('/')

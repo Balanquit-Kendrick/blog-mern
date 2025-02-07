@@ -1,9 +1,11 @@
 import express from 'express';
 import { db } from '../config/database.js'
 
-const app = express.Router();
+const router = express.Router();
 
-app.post('/add_user', (req, res)=>{
+router.post('/add_user', (req, res)=>{
+  console.log('add_user');
+  
   const sql = "INSERT INTO users (`firstname`, `lastname`, `email`) VALUES (?, ?, ?)";
   const values = [
       req.body.first_name,
@@ -20,7 +22,17 @@ app.post('/add_user', (req, res)=>{
   });
 })
 
-app.get("/", (req, res) => {
+router.delete("/delete_user/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "DELETE FROM users WHERE ID=?"
+  const values = [id]
+  db.query(sql, values, (err, result) => {
+      if (err) res.json({"message": "Server error"})
+      return res.json(result)
+  })
+})
+
+router.get("/", (req, res) => {
   const sql = "SELECT * FROM users"
   db.query(sql, (err, result) => {
       if (err) res.json({"message": "Server error"})
@@ -28,4 +40,4 @@ app.get("/", (req, res) => {
   })
 })
 
-export default app
+export default router
