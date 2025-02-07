@@ -31,6 +31,15 @@ router.delete("/delete_user/:id", (req, res) => {
       return res.json(result)
   })
 })
+router.get('/get_user/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM users WHERE ID=?"
+  const values = [id]
+  db.query(sql, values, (err, result) => {
+      if (err) res.json({"message": "Server error"})
+      return res.json(result)
+  })
+})
 
 router.get("/", (req, res) => {
   const sql = "SELECT * FROM users"

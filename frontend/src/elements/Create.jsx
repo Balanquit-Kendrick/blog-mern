@@ -25,6 +25,11 @@ function Create() {
   return (
     <div className='max-w-[1200px] mx-auto'>
         <div>
+            <button className='bg-blue-600 rounded-lg m-2 py-2 text-white cursor-pointer'>
+                <Link to='/'>
+                    Home
+                </Link>
+            </button>
             <h3>Add Users</h3>
             <form action="" onSubmit={handleSubmit}>
                 <div className='form-group my-3'>
