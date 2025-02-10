@@ -4,13 +4,32 @@ import { db } from '../config/database.js'
 const router = express.Router();
 
 router.post('/add_user', (req, res)=>{
-  console.log('add_user');
-  
   const sql = "INSERT INTO users (`firstname`, `lastname`, `email`) VALUES (?, ?, ?)";
   const values = [
       req.body.first_name,
       req.body.last_name,
       req.body.email
+  ]
+
+  db.query(sql, values, (err, result) => {
+      if (err) {
+          console.error('Error inserting data:', err);
+          return res.status(500).json({ error: 'Database error' });
+      }
+      res.status(201).json({ message: "User added successfully", id: result.insertId });
+  });
+})
+
+router.post('/edit_user/:id', (req, res)=>{
+  console.log('edit_user', req);
+  
+  const id = req.params.id;
+  const sql = "UPDATE users SET `firstname`=?, `lastname`=?, `email`=? WHERE ID=?";
+  const values = [
+      req.body.first_name,
+      req.body.last_name,
+      req.body.email,
+      id
   ]
 
   db.query(sql, values, (err, result) => {
